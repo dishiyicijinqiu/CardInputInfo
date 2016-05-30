@@ -47,9 +47,5 @@ namespace CardInputInfo.Entitys
         /// 保存路径
         /// </summary>
         public string ExportPath { get; set; }
-
-
-        public float Width { get; set; }
-        public float Height { get; set; }
     }
 }

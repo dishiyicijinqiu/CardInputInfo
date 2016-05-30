@@ -16,6 +16,8 @@ namespace CardInputInfo
 {
     public partial class MainForm : Form
     {
+        int[] piclens = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 32 };
+        string piclenstring = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 32";
         public MainForm()
         {
             InitializeComponent();
@@ -32,7 +34,8 @@ namespace CardInputInfo
             try
             {
                 var form = new CardNoForm();
-                form.Show();
+                form.Owner = this;
+                form.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -159,15 +162,9 @@ namespace CardInputInfo
                         return;
                     }
                     var files = Directory.GetFiles(this.tbPicPath.Text, "*.jpg");
-                    if (files.Length <= 0)
+                    if (!piclens.Contains(files.Length))
                     {
-                        MessageBox.Show("图片路径下jpg文件数不可小于等于0");
-                        this.tbPicPath.Focus();
-                        return;
-                    }
-                    if (files.Length > 32)
-                    {
-                        MessageBox.Show("图片路径下jpg文件数不可大于32");
+                        MessageBox.Show(string.Format("图片路径下jpg文件数必须为：{0}", piclenstring));
                         this.tbPicPath.Focus();
                         return;
                     }
@@ -177,22 +174,6 @@ namespace CardInputInfo
                     {
                         MessageBox.Show("保存路径不存在");
                         this.tbExportPath.Focus();
-                    }
-                    #endregion
-                    #region 检查图片宽高
-                    float width = 0;
-                    if (!float.TryParse(this.tbWidth.Text, out width))
-                    {
-                        MessageBox.Show("图片宽度不是有效数字");
-                        this.tbWidth.Focus();
-                        return;
-                    }
-                    float height = 0;
-                    if (!float.TryParse(this.tbHeight.Text, out height))
-                    {
-                        MessageBox.Show("图片高度不是有效数字");
-                        this.tbHeight.Focus();
-                        return;
                     }
                     #endregion
                     #region 检查卡号是否存在
@@ -212,15 +193,13 @@ namespace CardInputInfo
                     this.dgv.Rows[index].Cells["colProductName"].Value = this.tbProductName.Text;
                     this.dgv.Rows[index].Cells["colSpec"].Value = this.tbSpec.Text;
                     this.dgv.Rows[index].Cells["colBatchNo"].Value = this.tbBatchNo.Text;
-                    this.dgv.Rows[index].Cells["colQty"].Value = checkqty;
+                    this.dgv.Rows[index].Cells["colQty"].Value = qty;
                     this.dgv.Rows[index].Cells["colTestTime"].Value = this.tbTestTime.Text;
                     this.dgv.Rows[index].Cells["colCheckQty"].Value = checkqty;
                     this.dgv.Rows[index].Cells["colPicPath"].Value = this.tbPicPath.Text;
                     this.dgv.Rows[index].Cells["colTestResult"].Value = this.radioButton1.Checked ? "合格" : "不合格";
                     this.dgv.Rows[index].Cells["colUserName"].Value = strUserName;
                     this.dgv.Rows[index].Cells["colExportPath"].Value = this.tbExportPath.Text;
-                    this.dgv.Rows[index].Cells["colWidth"].Value = width;
-                    this.dgv.Rows[index].Cells["colHeight"].Value = height;
                     btnClearAll_Click(null, null);
                 }
             }
@@ -310,36 +289,22 @@ namespace CardInputInfo
                     entity.UserName = (string)row.Cells["colUserName"].Value;
                     entity.PicPath = (string)row.Cells["colPicPath"].Value;
                     entity.ExportPath = (string)row.Cells["colExportPath"].Value;
-                    entity.Width = (float)row.Cells["colWidth"].Value;
-                    entity.Height = (float)row.Cells["colHeight"].Value;
                     list.Add(entity);
                 }
+
+                var database = DatabaseFactory.CreateDatabase();
+                DbCommand dbCommand = database.GetSqlStringCommand("select * from [T_PicSize]");
+                var picsizes = database.GetEntitys<Entitys.PicSizeEntity>(dbCommand);
                 foreach (var item in list)
                 {
                     WordHelper helper = new WordHelper();
                     try
                     {
                         var files = Directory.GetFiles(item.PicPath, "*.jpg");
-                        if (files.Length <= 0)
-                        {
-                            throw new Exception(string.Format("路径{0}下jpg文件数不可为0", item.PicPath));
-                        }
-                        else if (files.Length > 0 && files.Length <= 9)
-                        {
-                            helper.OpenAndActive(Path.GetFullPath(string.Format("WordTemplates\\{0}张以内视图.doc", 9)), false, false);
-                        }
-                        else if (files.Length > 9 && files.Length <= 20)
-                        {
-                            helper.OpenAndActive(Path.GetFullPath(string.Format("WordTemplates\\{0}张以内视图.doc", 20)), false, false);
-                        }
-                        else if (files.Length > 20 && files.Length <= 32)
-                        {
-                            helper.OpenAndActive(Path.GetFullPath(string.Format("WordTemplates\\{0}张以内视图.doc", 32)), false, false);
-                        }
-                        else
-                        {
-                            throw new Exception(string.Format("路径{0}下jpg文件数不可超过32", item.PicPath));
-                        }
+                        if (!piclens.Contains(files.Length))
+                            throw new Exception(string.Format("图片路径下jpg文件数必须为：{0}", piclenstring));
+                        var picsize = picsizes.First(t => t.FileCount == files.Length);
+                        helper.OpenAndActive(Path.GetFullPath(string.Format("WordTemplates\\{0}张.doc", files.Length)), false, false);
                         helper.ReplaceBookMark("产品名称", item.ProductName);
                         helper.ReplaceBookMark("规格型号", item.Spec);
                         helper.ReplaceBookMark("产品批号", item.BatchNo);
@@ -356,7 +321,7 @@ namespace CardInputInfo
                             bool isExist = helper.GoToBookMark(bookmarkname);
                             if (isExist)
                             {
-                                helper.InsertPic(file, item.Width, item.Height);
+                                helper.InsertPic(file, picsize.Width, picsize.Height);
                                 //helper.InsertPic(file);
                                 //throw new Exception(string.Format("标签{0}不存在", bookmarkname));
                             }
@@ -437,6 +402,11 @@ namespace CardInputInfo
             }
         }
 
+        private string GetWidthByFileCount(int filelen)
+        {
+            throw new NotImplementedException();
+        }
+
         private void btnDel_Click(object sender, EventArgs e)
         {
             var rows = this.dgv.SelectedRows;
@@ -465,6 +435,20 @@ namespace CardInputInfo
                     this.dgv.Rows[e.RowIndex].Cells["colExportPath"].Value,
                     this.dgv.Rows[e.RowIndex].Cells["colBatchNo"].Value);
                 System.Diagnostics.Process.Start(filepath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnSetPicSize_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var form = new PicSizeForm();
+                form.Owner = this;
+                form.ShowDialog();
             }
             catch (Exception ex)
             {

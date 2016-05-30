@@ -31,6 +31,18 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dgv = new System.Windows.Forms.DataGridView();
+            this.colProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSpec = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBatchNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTestTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCheckQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTestResult = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPicPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colExportPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -64,23 +76,8 @@
             this.btnExport = new System.Windows.Forms.ToolStripButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.colProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSpec = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBatchNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTestTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCheckQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTestResult = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPicPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colExportPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.tbHeight = new System.Windows.Forms.TextBox();
-            this.tbWidth = new System.Windows.Forms.TextBox();
             this.dataGridView_ShowLine1 = new CardInputInfo.DataGridView_ShowLine(this.components);
+            this.btnSetPicSize = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -112,15 +109,87 @@
             this.colExportPath,
             this.colWidth,
             this.colHeight});
-            this.dgv.Location = new System.Drawing.Point(0, 218);
+            this.dgv.Location = new System.Drawing.Point(0, 188);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
             this.dgv.RowTemplate.Height = 23;
             this.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView_ShowLine1.SetShowLineNo(this.dgv, true);
-            this.dgv.Size = new System.Drawing.Size(1075, 330);
+            this.dgv.Size = new System.Drawing.Size(1075, 360);
             this.dgv.TabIndex = 16;
             this.dgv.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellDoubleClick);
+            // 
+            // colProductName
+            // 
+            this.colProductName.HeaderText = "产品名称";
+            this.colProductName.Name = "colProductName";
+            this.colProductName.ReadOnly = true;
+            // 
+            // colSpec
+            // 
+            this.colSpec.HeaderText = "规格型号";
+            this.colSpec.Name = "colSpec";
+            this.colSpec.ReadOnly = true;
+            // 
+            // colBatchNo
+            // 
+            this.colBatchNo.HeaderText = "产品批号";
+            this.colBatchNo.Name = "colBatchNo";
+            this.colBatchNo.ReadOnly = true;
+            // 
+            // colQty
+            // 
+            this.colQty.HeaderText = "生产数量";
+            this.colQty.Name = "colQty";
+            this.colQty.ReadOnly = true;
+            // 
+            // colTestTime
+            // 
+            this.colTestTime.HeaderText = "测量时间";
+            this.colTestTime.Name = "colTestTime";
+            this.colTestTime.ReadOnly = true;
+            // 
+            // colCheckQty
+            // 
+            this.colCheckQty.HeaderText = "抽检数量";
+            this.colCheckQty.Name = "colCheckQty";
+            this.colCheckQty.ReadOnly = true;
+            // 
+            // colTestResult
+            // 
+            this.colTestResult.HeaderText = "测量结果";
+            this.colTestResult.Name = "colTestResult";
+            this.colTestResult.ReadOnly = true;
+            // 
+            // colUserName
+            // 
+            this.colUserName.HeaderText = "测量员";
+            this.colUserName.Name = "colUserName";
+            this.colUserName.ReadOnly = true;
+            // 
+            // colPicPath
+            // 
+            this.colPicPath.HeaderText = "图片路径";
+            this.colPicPath.Name = "colPicPath";
+            this.colPicPath.ReadOnly = true;
+            // 
+            // colExportPath
+            // 
+            this.colExportPath.HeaderText = "保存路径";
+            this.colExportPath.Name = "colExportPath";
+            this.colExportPath.ReadOnly = true;
+            // 
+            // colWidth
+            // 
+            this.colWidth.HeaderText = "图片宽度";
+            this.colWidth.Name = "colWidth";
+            this.colWidth.ReadOnly = true;
+            // 
+            // colHeight
+            // 
+            this.colHeight.HeaderText = "图片高度";
+            this.colHeight.Name = "colHeight";
+            this.colHeight.ReadOnly = true;
             // 
             // toolStripContainer1
             // 
@@ -131,10 +200,6 @@
             // 
             // toolStripContainer1.ContentPanel
             // 
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.label11);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.label12);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.tbHeight);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.tbWidth);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.btnExportPath);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.label10);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.tbExportPath);
@@ -393,10 +458,11 @@
             this.btnClearCopy,
             this.btnClearAll,
             this.btnExport,
-            this.btnDel});
+            this.btnDel,
+            this.btnSetPicSize});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(357, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(472, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // btnSetCardNo
@@ -449,109 +515,15 @@
             this.btnDel.Text = "删除";
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
-            // colProductName
+            // btnSetPicSize
             // 
-            this.colProductName.HeaderText = "产品名称";
-            this.colProductName.Name = "colProductName";
-            this.colProductName.ReadOnly = true;
-            // 
-            // colSpec
-            // 
-            this.colSpec.HeaderText = "规格型号";
-            this.colSpec.Name = "colSpec";
-            this.colSpec.ReadOnly = true;
-            // 
-            // colBatchNo
-            // 
-            this.colBatchNo.HeaderText = "产品批号";
-            this.colBatchNo.Name = "colBatchNo";
-            this.colBatchNo.ReadOnly = true;
-            // 
-            // colQty
-            // 
-            this.colQty.HeaderText = "生产数量";
-            this.colQty.Name = "colQty";
-            this.colQty.ReadOnly = true;
-            // 
-            // colTestTime
-            // 
-            this.colTestTime.HeaderText = "测量时间";
-            this.colTestTime.Name = "colTestTime";
-            this.colTestTime.ReadOnly = true;
-            // 
-            // colCheckQty
-            // 
-            this.colCheckQty.HeaderText = "抽检数量";
-            this.colCheckQty.Name = "colCheckQty";
-            this.colCheckQty.ReadOnly = true;
-            // 
-            // colTestResult
-            // 
-            this.colTestResult.HeaderText = "测量结果";
-            this.colTestResult.Name = "colTestResult";
-            this.colTestResult.ReadOnly = true;
-            // 
-            // colUserName
-            // 
-            this.colUserName.HeaderText = "测量员";
-            this.colUserName.Name = "colUserName";
-            this.colUserName.ReadOnly = true;
-            // 
-            // colPicPath
-            // 
-            this.colPicPath.HeaderText = "图片路径";
-            this.colPicPath.Name = "colPicPath";
-            this.colPicPath.ReadOnly = true;
-            // 
-            // colExportPath
-            // 
-            this.colExportPath.HeaderText = "保存路径";
-            this.colExportPath.Name = "colExportPath";
-            this.colExportPath.ReadOnly = true;
-            // 
-            // colWidth
-            // 
-            this.colWidth.HeaderText = "图片宽度";
-            this.colWidth.Name = "colWidth";
-            this.colWidth.ReadOnly = true;
-            // 
-            // colHeight
-            // 
-            this.colHeight.HeaderText = "图片高度";
-            this.colHeight.Name = "colHeight";
-            this.colHeight.ReadOnly = true;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(255, 195);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(53, 12);
-            this.label11.TabIndex = 28;
-            this.label11.Text = "图片高度";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(14, 195);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(53, 12);
-            this.label12.TabIndex = 27;
-            this.label12.Text = "图片宽度";
-            // 
-            // tbHeight
-            // 
-            this.tbHeight.Location = new System.Drawing.Point(314, 192);
-            this.tbHeight.Name = "tbHeight";
-            this.tbHeight.Size = new System.Drawing.Size(160, 21);
-            this.tbHeight.TabIndex = 26;
-            // 
-            // tbWidth
-            // 
-            this.tbWidth.Location = new System.Drawing.Point(75, 191);
-            this.tbWidth.Name = "tbWidth";
-            this.tbWidth.Size = new System.Drawing.Size(124, 21);
-            this.tbWidth.TabIndex = 25;
+            this.btnSetPicSize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnSetPicSize.Image = ((System.Drawing.Image)(resources.GetObject("btnSetPicSize.Image")));
+            this.btnSetPicSize.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSetPicSize.Name = "btnSetPicSize";
+            this.btnSetPicSize.Size = new System.Drawing.Size(84, 22);
+            this.btnSetPicSize.Text = "设置图片大小";
+            this.btnSetPicSize.Click += new System.EventHandler(this.btnSetPicSize_Click);
             // 
             // MainForm
             // 
@@ -630,10 +602,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colExportPath;
         private System.Windows.Forms.DataGridViewTextBoxColumn colWidth;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHeight;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox tbHeight;
-        private System.Windows.Forms.TextBox tbWidth;
+        private System.Windows.Forms.ToolStripButton btnSetPicSize;
     }
 }
 

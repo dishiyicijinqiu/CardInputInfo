@@ -87,5 +87,10 @@ namespace CardInputInfo
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
